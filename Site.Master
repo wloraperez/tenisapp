@@ -1,0 +1,167 @@
+﻿<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Site.master.vb" Inherits="TenisApp.SiteMaster" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title><%: Page.Title %> - Tenistas en línea</title>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+    <%-- <link href="Content/Site.css" rel="stylesheet" />--%>
+
+    <link href="Content/style.css" rel="stylesheet" />
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
+                <%--Framework scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="jquery.ui.combined" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <div id="main">
+            <div id="header">
+                <section id="login">
+                    <ul>
+                        <li><a id="registrar" runat="server" href="~/Account/Register">Registrar</a></li>
+                        <li><a id="loginlink" runat="server" href="~/Account/Login">Ingresar</a></li>
+
+                        <li>
+                            <asp:HyperLink ID="usuario" runat="server" NavigateUrl="~/Account/ChangePassword"></asp:HyperLink></li>
+                        <li>
+                            <a id="logout" runat="server" href="~/Account/Logout">Cerrar sesión</a></li>
+                        <li><a id="activarusuario" runat="server" href="~/Account/ActivarUsuario">Activar usuario</a></li>
+                    </ul>
+                </section>
+            </div>
+            <!--close header-->
+
+            <div id="menubar">
+                <div id="welcome">
+                    <h1>Tenistas en línea</h1>
+                </div>
+                <!--close welcome-->
+
+                <div id="menu_items">
+                    <ul id="menu">
+                        <li id="liHome"><a id="aInicio" runat="server" href="~/">Inicio</a></li>
+                        <li id="liJugador"><a id="aJugadores" runat="server" href="~/Jugadores/ListadoJugadores">Jugadores</a></li>
+                        <li id="liMant"><a id="aMantenimientos" runat="server" href="~/Mantenimientos/Mantenimientos">Mantenimientos</a></li>
+                        <li id="liTorneo"><a id="aTorneos" runat="server" href="~/Torneos/Listados">Torneos</a></li>
+                        <%--<li><a id="A8" runat="server" href="~/Contact">Contacto</a></li>--%>
+                    </ul>
+                </div>
+                <!--close menu-->
+
+            </div>
+
+            <!--close menubar-->
+            <div id="site_content">
+
+                <div class="sidebar_container">
+
+                    <div class="sidebar">
+                        <div class="sidebar_item">
+                            <h2>Noticias</h2>
+                        </div>
+                        <!--close sidebar_item-->
+                    </div>
+                    <!--close sidebar-->
+
+                    <div class="sidebar">
+                        <div class="sidebar_item">
+                            <h3>Abril 2015</h3>
+                            <p>Inicia el torneo de tenis del Grupo SID - TenisSID-2015-1</p>
+                        </div>
+                        <!--close sidebar_item-->
+                    </div>
+                    <!--close sidebar-->
+
+                    <div class="sidebar">
+                        <div class="sidebar_item">
+                            <h3>Marzo 2015</h3>
+                            <p>Finaliza torneo de tenis del Grupo SID - TenisSID-2014-3</p>
+                        </div>
+                        <!--close sidebar_item-->
+                    </div>
+                    <!--close sidebar-->
+                </div>
+                <!--close sidebar_container-->
+
+                <div id="content">
+
+                    <div class="content_item">
+                        <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
+                        <%--<section class="content-wrapper main-content clear-fix">--%>
+                        <section>
+                            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+                        </section>
+                    </div>
+                    <!--close content_item-->
+
+                </div>
+                <!--close content-->
+
+            </div>
+            <!--close site_content-->
+
+        </div>
+        <div id="footer">
+            &copy; <%: DateTime.Now.Year %> - Tenistas en línea
+        </div>
+        <!--close footer-->
+        <script>
+            $(function () {
+                var loc = window.location.href; // returns the full URL
+                if (/Jugadores/.test(loc)) {
+                    $('#liJugador').addClass('current');
+
+                    $('#liMant').removeClass('current');
+                    $('#liTorneo').removeClass('current');
+                    $('#liHome').removeClass('current');
+                }
+                else if (/Mantenimientos/.test(loc)) {
+                    $('#liMant').addClass('current');
+
+                    $('#liJugador').removeClass('current');
+                    $('#liTorneo').removeClass('current');
+                    $('#liHome').removeClass('current');
+                }
+                else if (/Torneos/.test(loc)) {
+                    $('#liTorneo').addClass('current');
+
+                    $('#liMant').removeClass('current');
+                    $('#liJugador').removeClass('current');
+                    $('#liHome').removeClass('current');
+                }
+                else {
+                    $('#liHome').addClass('current');
+
+                    $('#liMant').removeClass('current');
+                    $('#liJugador').removeClass('current');
+                    $('#liTorneo').removeClass('current');
+                }
+            });
+        </script>
+    </form>
+</body>
+</html>
